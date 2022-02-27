@@ -18,11 +18,11 @@ namespace UI
         {
             _score = FindObjectOfType<Score>();
             _button = GetComponent<Button>();
+            _price = towerPrefab.GetComponent<Tower>().InitialCost;
         }
 
         private void Start()
         {
-            _price = towerPrefab.GetComponent<Tower>().InitialCost;
             costText.text = _price.ToString();
             _button.onClick.AddListener(PurchaseTower);
         }
