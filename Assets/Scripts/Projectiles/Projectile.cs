@@ -5,7 +5,7 @@ namespace Projectiles
 	public class Projectile : MonoBehaviour
 	{
 		[SerializeField]
-		private float damage;
+		private float damage = 10;
 		[SerializeField]
 		private float speed = 1f;
 		[SerializeField]
@@ -20,6 +20,8 @@ namespace Projectiles
 			get => direction;
 			set => direction = value;
 		}
+
+		public float Damage => damage;
 
 		void Start () {
 		

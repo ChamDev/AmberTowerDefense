@@ -11,7 +11,11 @@ namespace UI
 
       private void Awake()
       {
-         _scoreText = GetComponent<Text>();
+         if (_scoreText == null)
+         {
+            _scoreText = GetComponent<Text>();
+         }
+         
       }
 
       public void AddScore(int score)
