@@ -33,6 +33,7 @@ namespace Enemies
             {
                 _enemyDamage.MakeDamage();
                 gameObject.SetActive(false);
+                return;
             }
 
             var distance = Vector2.Distance(transform.position,
@@ -41,7 +42,14 @@ namespace Enemies
             if (distance <= wayPointThreshold)
             {
                 _wayPointIndex++;
-                _currentWayPoint = _pathManager.WayPointsTransform[_wayPointIndex];
+                if (_wayPointIndex >= _pathManager.WayPointsTransform.Length)
+                {
+                    _currentWayPoint = null;
+                }
+                else
+                {
+                    _currentWayPoint = _pathManager.WayPointsTransform[_wayPointIndex];
+                }
             }
             else
             {

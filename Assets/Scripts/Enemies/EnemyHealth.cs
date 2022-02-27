@@ -22,6 +22,7 @@ namespace Enemies
             if (other.CompareTag(projectileTag))
             {
                 Hit(other.GetComponent<Projectile>().Damage);
+                other.gameObject.SetActive(false);
             }
         }
 

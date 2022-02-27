@@ -20,7 +20,8 @@ namespace Managers
 
 		private void Awake()
 		{
-			_score = GameObject.FindObjectOfType<Score>();
+			_score = FindObjectOfType<Score>();
+			_playerHealth = FindObjectOfType<HealthBar>();
 		}
 
 

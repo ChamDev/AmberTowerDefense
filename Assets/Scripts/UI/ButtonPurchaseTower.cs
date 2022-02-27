@@ -10,25 +10,28 @@ namespace UI
     {
         private Button _button;
         [SerializeField] private GameObject towerPrefab;
-        private GameManager _gameManager;
+        [SerializeField] private Text costText;
         private Score _score;
+        private int _price;
+        
         private void Awake()
         {
+            _score = FindObjectOfType<Score>();
             _button = GetComponent<Button>();
         }
 
         private void Start()
         {
+            _price = towerPrefab.GetComponent<Tower>().InitialCost;
+            costText.text = _price.ToString();
             _button.onClick.AddListener(PurchaseTower);
         }
 
         private void PurchaseTower()
         {
-            var price = towerPrefab.GetComponent<Tower>().InitialCost;
-
-            if (price <= _score.GetScore())
+            if (_price <= _score.GetScore())
             {
-                _score.AddScore(-price);
+                _score.AddScore(-_price);
                 Instantiate(towerPrefab);
             }
         }

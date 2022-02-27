@@ -12,18 +12,8 @@ namespace Towers
         private GameObject projectilePrefab;
         [SerializeField]
         private int initialCost;
-        [SerializeField]
-        private int upgradeCost;
-        [SerializeField]
-        private int sellCost;
-        [SerializeField]
-        private int upgradeIncrementCost;
-        [SerializeField]
-        private int sellIncrementCost;
-        
-        private float _timeSinceLastShot;
-        private int _upgradeLevel;
 
+        private float _timeSinceLastShot;
         public int InitialCost => initialCost;
 
         private void Update()
@@ -58,10 +48,11 @@ namespace Towers
                     
                     //If we are here is because we have a target
                     Transform target = hitColliders[index].transform;
-                    Vector2 direction = (target.position - this.transform.position).normalized;		
+                    Vector2 direction = (target.position - transform.position).normalized;		
 				
                     //Instantiating projectile
                     GameObject projectile = Instantiate(projectilePrefab);
+                    projectile.transform.position = transform.position;
                     projectile.GetComponent<Projectiles.Projectile>().Direction = direction;
                     
                     _timeSinceLastShot = 0;

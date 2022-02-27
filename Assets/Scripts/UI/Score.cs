@@ -15,7 +15,11 @@ namespace UI
          {
             _scoreText = GetComponent<Text>();
          }
-         
+      }
+
+      private void Start()
+      {
+         UpdateScore();
       }
 
       public void AddScore(int score)

@@ -19,12 +19,12 @@ namespace Ui
         public bool ApplyDamage(int damage){
             
             _currentHealth -= damage;
-            
+
             if(_currentHealth > 0){
                 UpdateHealthBar();
                 return false;
             }
-            
+           
             _currentHealth = 0;
             UpdateHealthBar();
             return true;

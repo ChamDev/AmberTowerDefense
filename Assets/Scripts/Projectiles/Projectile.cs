@@ -8,17 +8,17 @@ namespace Projectiles
 		private float damage = 10;
 		[SerializeField]
 		private float speed = 1f;
-		[SerializeField]
-		private Vector3 direction;
+		
+		
 		[SerializeField]
 		private float lifeDuration = 10f;
     
 		private Rigidbody2D rb2D;
-
+		private Vector3 _direction;
 		public Vector3 Direction
 		{
-			get => direction;
-			set => direction = value;
+			get => _direction;
+			set => _direction = value;
 		}
 
 		public float Damage => damage;
@@ -27,10 +27,10 @@ namespace Projectiles
 		
 			rb2D = GetComponent<Rigidbody2D>();
         
-			direction = direction.normalized;
+			_direction = _direction.normalized;
 		
 			//Rotating the projectile
-			float angleRad = Mathf.Atan2(-direction.y, direction.x);
+			float angleRad = Mathf.Atan2(-_direction.y, _direction.x);
 			float angleDeg = angleRad * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
         
@@ -41,7 +41,7 @@ namespace Projectiles
 		
 			// s = v * t
 			//transform.position += ( speed * direction ) * Time.deltaTime;
-			rb2D.MovePosition(transform.position + ( speed * direction ) * Time.fixedDeltaTime);
+			rb2D.MovePosition(transform.position + ( speed * _direction ) * Time.fixedDeltaTime);
 		} 
 	}
 }

@@ -12,6 +12,7 @@ namespace Managers
         [SerializeField] private int enemiesPerWave = 5;
         [SerializeField] private int increaseEnemiesPerWave = 3;
         [SerializeField] private int numberOfWaves = 2;
+        [SerializeField] private float initialTimeToWait = 3;
         [SerializeField] private float timeMaxToWait = 5;
         [SerializeField] private GameObject[] enemyPrefabs;
         [SerializeField] private Transform spawnPoint;
@@ -31,6 +32,8 @@ namespace Managers
 
         IEnumerator EnemyWaveSpawner()
         {
+            yield return new WaitForSeconds(initialTimeToWait);
+            
             for (int i = 0; i < numberOfWaves; i++)
             {
                 yield return SpawningEnemies();
