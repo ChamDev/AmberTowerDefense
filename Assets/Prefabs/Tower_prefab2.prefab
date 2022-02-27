@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rangeRadius: 4
   reloadTime: 2
-  projectilePrefab: {fileID: 2849413738476250815, guid: 2e200c66ce4907e43b2326cdf300b618,
+  projectilePrefab: {fileID: 2857207689966820249, guid: 3fa0ccc8f9a60d743b05b65c3e674ad3,
     type: 3}
   initialCost: 30
 --- !u!114 &7601241991471803205

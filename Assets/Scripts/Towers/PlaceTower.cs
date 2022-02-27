@@ -30,14 +30,7 @@ namespace Towers
                 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    //Enabling the tower so it can shoot
-                    _towerScript.enabled = true;
-                    //Restoring color
-                    _spriteRenderer.color = Color.white;
-                    //Adding a collider to prevent other torrets can be placed here
-                    gameObject.AddComponent<BoxCollider2D>();
-                    //Disabling this script
-                    this.enabled = false;
+                    PlacingTower();
                 }
             }
             else
@@ -46,6 +39,18 @@ namespace Towers
             }
         }
 
+        void PlacingTower()
+        {
+            //Enabling the tower so it can shoot
+            _towerScript.enabled = true;
+            //Restoring color
+            _spriteRenderer.color = Color.white;
+            //Adding a collider to prevent other torrets can be placed here
+            gameObject.AddComponent<BoxCollider2D>();
+            //Disabling this script
+            this.enabled = false;
+        }
+        
         void GetMousePos()
         {
             _mousePosInX = Input.mousePosition.x;

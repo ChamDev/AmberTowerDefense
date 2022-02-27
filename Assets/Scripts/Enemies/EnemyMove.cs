@@ -41,15 +41,7 @@ namespace Enemies
 
             if (distance <= wayPointThreshold)
             {
-                _wayPointIndex++;
-                if (_wayPointIndex >= _pathManager.WayPointsTransform.Length)
-                {
-                    _currentWayPoint = null;
-                }
-                else
-                {
-                    _currentWayPoint = _pathManager.WayPointsTransform[_wayPointIndex];
-                }
+                NextWayPoint();
             }
             else
             {
@@ -57,6 +49,19 @@ namespace Enemies
             }
         }
 
+        private void NextWayPoint()
+        {
+            _wayPointIndex++;
+            if (_wayPointIndex >= _pathManager.WayPointsTransform.Length)
+            {
+                _currentWayPoint = null;
+            }
+            else
+            {
+                _currentWayPoint = _pathManager.WayPointsTransform[_wayPointIndex];
+            }
+        }
+        
         private void MoveTowards(Vector3 destination){
             
             float step = speed * Time.fixedDeltaTime;
