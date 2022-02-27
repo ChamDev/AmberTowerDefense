@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wayPointThreshold: 0.1
-  speed: 2
+  speed: 1
 --- !u!50 &2839554041793207501
 Rigidbody2D:
   serializedVersion: 4

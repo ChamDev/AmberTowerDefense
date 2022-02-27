@@ -1639,9 +1639,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66ca53710e08e814abe8213bb4e73195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesPerWave: 1
-  increaseEnemiesPerWave: 1
-  numberOfWaves: 1
+  enemiesPerWave: 5
+  increaseEnemiesPerWave: 3
+  numberOfWaves: 2
+  initialTimeToWait: 3
   timeMaxToWait: 5
   enemyPrefabs:
   - {fileID: 2857207689966820249, guid: 001fdc175562da44982a7614e4fb610a, type: 3}
