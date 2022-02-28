@@ -23,13 +23,13 @@ public class GameOverManager : MonoBehaviour
     }
 
 
-    void Victory()
+    private void Victory()
     {
         winningScreen.SetActive(true);
         Time.timeScale = 0;
     }
     
-    public void GameOver()
+    private void GameOver()
     {
         losingScreen.SetActive(true);
         Time.timeScale = 0;
