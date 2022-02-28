@@ -13,7 +13,7 @@ namespace UI
         [SerializeField] private Text costText;
         private Score _score;
         private int _price;
-        
+       
         private void Awake()
         {
             _score = FindObjectOfType<Score>();
@@ -32,15 +32,7 @@ namespace UI
             if (_price <= _score.GetScore())
             {
                 _score.AddScore(-_price);
-                GameObject towerPrefab = ObjectPool.SharedInstance.GetPooledObject();
-                if (towerPrefab != null)
-                {
-                    towerPrefab.transform.position = transform.position;
-                    towerPrefab.transform.rotation = transform.rotation;
-                    towerPrefab.SetActive(true);
-                }
-
-                
+                Instantiate(towerPrefab);
             }
         }
     }

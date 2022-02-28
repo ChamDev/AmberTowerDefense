@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Managers;
+using UnityEngine;
 
 namespace Towers
 {
@@ -12,9 +14,19 @@ namespace Towers
         private GameObject projectilePrefab;
         [SerializeField]
         private int initialCost;
-
         private float _timeSinceLastShot;
         public int InitialCost => initialCost;
+        
+        private const int _poolingAmount = 5;
+        private ObjectPool _objectPool;
+      
+        
+        private void Awake()
+        {
+            _objectPool = gameObject.AddComponent<ObjectPool>();
+            _objectPool.PoolingObjects(projectilePrefab, _poolingAmount);
+        }
+
 
         private void Update()
         {
@@ -58,11 +70,16 @@ namespace Towers
                 Transform target = hitColliders[index].transform;
                 Vector2 direction = (target.position - transform.position).normalized;		
 				
-                //Instantiating projectile
-                GameObject projectile = Instantiate(projectilePrefab);
-                projectile.transform.position = transform.position;
-                projectile.GetComponent<Projectiles.Projectile>().Direction = direction;
-                    
+                //Using the pool of projectiles
+                GameObject projectile =  _objectPool.GetPooledObject();
+                if (projectile != null)
+                {
+                    projectile.transform.position = transform.position;
+                    projectile.transform.rotation = transform.rotation;
+                    projectile.GetComponent<Projectiles.Projectile>().Direction = direction;
+                    projectile.SetActive(true);
+                }
+                
                 _timeSinceLastShot = 0;
             }
         }

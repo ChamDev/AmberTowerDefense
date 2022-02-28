@@ -6,37 +6,30 @@ namespace Managers
 {
     public class ObjectPool : MonoBehaviour
     {
-        public static ObjectPool SharedInstance;
-        
-        [SerializeField]private GameObject objectToPool;
-        [SerializeField]private int amountToPool;
-        
-        private List<GameObject> pooledObjects;
+        private int _amountToPool;
+        private List<GameObject> _pooledObjects;
 
-        private void Awake()
+        public void PoolingObjects(GameObject objectToPool, int amountToPool)
         {
-            SharedInstance = this;
-        }
-
-        private void Start()
-        {
-            pooledObjects = new List<GameObject>();
+            _pooledObjects = new List<GameObject>();
+            _amountToPool = amountToPool;
             GameObject tmp;
+            
             for (int i = 0; i < amountToPool; i++)
             {
                 tmp = Instantiate(objectToPool);
                 tmp.SetActive(false);
-                pooledObjects.Add(tmp);
+                _pooledObjects.Add(tmp);
             }
         }
 
         public GameObject GetPooledObject()
         {
-            for (int i = 0; i < amountToPool; i++)
+            for (int i = 0; i < _amountToPool; i++)
             {
-                if (!pooledObjects[i].activeInHierarchy)
+                if (!_pooledObjects[i].activeInHierarchy)
                 {
-                    return pooledObjects[i];
+                    return _pooledObjects[i];
                 }
             }
 

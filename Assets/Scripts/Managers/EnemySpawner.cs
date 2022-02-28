@@ -24,9 +24,19 @@ namespace Managers
         [Inject] private IGameManager _gameManager;
         
         public static Action OnEnemiesDefeated;
+        private ObjectPool [] _objectPool;
+        private const int poolAmountEnemies = 10;
         
         private void Start()
         {
+            _objectPool = new ObjectPool[enemyPrefabs.Length];
+
+            for (int i = 0; i < _objectPool.Length; i++)
+            {
+                _objectPool[i] = gameObject.AddComponent<ObjectPool>();
+                _objectPool[i].PoolingObjects(enemyPrefabs[i], poolAmountEnemies);
+            }
+            
             StartCoroutine(EnemyWaveSpawner());
         }
 
@@ -48,13 +58,22 @@ namespace Managers
         IEnumerator SpawningEnemies()
         {
             _gameManager.NumberEnemiesToDefeat = enemiesPerWave;
-            _enemyIndex = Random.Range(0, enemyPrefabs.Length);
+           
             
             for (int i = 0; i < enemiesPerWave; i++)
             {
-                Instantiate(enemyPrefabs[_enemyIndex], spawnPoint.position, quaternion.identity);
-
-                _timeToWait = Random.Range(0, timeMaxToWait);
+                _enemyIndex = Random.Range(0, enemyPrefabs.Length);
+                //Using the pool of enemies
+                GameObject enemyObj =  _objectPool[_enemyIndex].GetPooledObject();
+                
+                if (enemyObj != null)
+                {
+                    enemyObj.transform.position = spawnPoint.position;
+                    enemyObj.transform.rotation = spawnPoint.rotation;
+                    enemyObj.SetActive(true);
+                }
+                
+                _timeToWait = Random.Range(1, timeMaxToWait);
 
                 yield return new WaitForSeconds(_timeToWait);
             }
