@@ -32,7 +32,15 @@ namespace UI
             if (_price <= _score.GetScore())
             {
                 _score.AddScore(-_price);
-                Instantiate(towerPrefab);
+                GameObject towerPrefab = ObjectPool.SharedInstance.GetPooledObject();
+                if (towerPrefab != null)
+                {
+                    towerPrefab.transform.position = transform.position;
+                    towerPrefab.transform.rotation = transform.rotation;
+                    towerPrefab.SetActive(true);
+                }
+
+                
             }
         }
     }

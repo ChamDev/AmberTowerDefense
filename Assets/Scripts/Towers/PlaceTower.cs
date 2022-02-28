@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
-
+using Zenject;
 namespace Towers
 {
     public class PlaceTower : MonoBehaviour
     {
-        private Managers.GameManager _gameManager;
         private float _mousePosInX;
         private float _mousePosInY;
         private const float LocalPosInZ = 7.0f;
-
+        
         private Tower _towerScript;
         private SpriteRenderer _spriteRenderer;
+        
+        [Inject] private IGameManager _gameManager;
+     
         void Awake () 
         {
-            _gameManager = FindObjectOfType<Managers.GameManager>();
             _towerScript = GetComponent<Tower>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
@@ -22,7 +23,7 @@ namespace Towers
         {
             GetMousePos();
             transform.position = Camera.main.ScreenToWorldPoint(new Vector3(_mousePosInX,_mousePosInY,LocalPosInZ));
-
+            
             if (_gameManager.isPointerOnAllowedArea())
             {
                 //To show the player if the placement is allowed

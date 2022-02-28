@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Enemies;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Ui
@@ -6,28 +8,39 @@ namespace Ui
     public class HealthBar : MonoBehaviour
     {
         [SerializeField] private int maxHealth;
+        
         private Image _fillingImage;
         private int _currentHealth;
-
+        public static Action OnPlayerDead;
+        
         private void Awake()
         {
             _fillingImage = GetComponent<Image>();
             _currentHealth = maxHealth;
+            EnemyDamage.OnEnemyHit += ApplyDamage;
+        }
+
+        private void Start()
+        {
             UpdateHealthBar();
         }
-        
-        public bool ApplyDamage(int damage){
+
+        private void OnDestroy()
+        {
+            EnemyDamage.OnEnemyHit -= ApplyDamage;
+        }
+
+        public void ApplyDamage(int damage){
             
             _currentHealth -= damage;
 
             if(_currentHealth > 0){
                 UpdateHealthBar();
-                return false;
             }
            
             _currentHealth = 0;
             UpdateHealthBar();
-            return true;
+            OnPlayerDead?.Invoke();
         }
         
         void UpdateHealthBar(){

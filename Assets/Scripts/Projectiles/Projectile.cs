@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Projectiles
 {
@@ -13,6 +14,7 @@ namespace Projectiles
     
 		private Rigidbody2D _rigidbody2D;
 		private Vector3 _direction;
+		private float timer;
 		public Vector3 Direction
 		{
 			set => _direction = value;
@@ -30,14 +32,25 @@ namespace Projectiles
 			float angleRad = Mathf.Atan2(-_direction.y, _direction.x);
 			float angleDeg = angleRad * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
-        
-			Destroy(gameObject, lifeDuration);
+			
 		}
     
 		void FixedUpdate () {
 		
 			// s = v * t
 			_rigidbody2D.MovePosition(transform.position + ( speed * _direction ) * Time.fixedDeltaTime);
-		} 
+
+			timer += Time.fixedDeltaTime;
+
+			if (timer > lifeDuration)
+			{
+				gameObject.SetActive(false);
+			}
+		}
+
+		private void OnDisable()
+		{
+			timer = 0;
+		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Zenject;
 
 namespace Managers
 {
@@ -18,13 +19,12 @@ namespace Managers
         [SerializeField] private Transform spawnPoint;
 
         private int _enemyIndex = 0;
-        private GameManager _gameManager;
         private float _timeToWait = 1;
-        private void Awake()
-        {
-            _gameManager = FindObjectOfType<GameManager>();
-        }
-
+        
+        [Inject] private IGameManager _gameManager;
+        
+        public static Action OnEnemiesDefeated;
+        
         private void Start()
         {
             StartCoroutine(EnemyWaveSpawner());
@@ -36,12 +36,13 @@ namespace Managers
             
             for (int i = 0; i < numberOfWaves; i++)
             {
+                //Wait Until all the enemies has been spawned and defeated
                 yield return SpawningEnemies();
 
                 enemiesPerWave += increaseEnemiesPerWave;
             }
-            
-            _gameManager.GameOver(true);
+            //Win Condition
+            OnEnemiesDefeated?.Invoke();
         }
 
         IEnumerator SpawningEnemies()

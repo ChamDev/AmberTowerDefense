@@ -1,18 +1,13 @@
 ﻿using System;
 using Managers;
 using UnityEngine;
-
+using Zenject;
 namespace Towers
 {
     public class PointerTowerAllowed : MonoBehaviour
     {
-        private GameManager _gameManager;
-
-        private void Awake()
-        {
-            _gameManager = FindObjectOfType<GameManager>();
-        }
-
+        [Inject] private IGameManager _gameManager;
+        
         void OnMouseEnter()
         {
             _gameManager.SetPointerAllowed(true);

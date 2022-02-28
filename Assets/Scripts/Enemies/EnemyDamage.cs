@@ -1,22 +1,27 @@
 ﻿using System;
 using Managers;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies
 {
     public class EnemyDamage : MonoBehaviour
     {
         [SerializeField] private int damage = 10;
-        private GameManager _gameManager;
-
+        [Inject] private IGameManager _gameManager;
+        
+        public static Action<int> OnEnemyHit;
+        private EnemyHealth _enemyHealth;
+        
         private void Awake()
         {
-            _gameManager = FindObjectOfType<GameManager>();
+            _enemyHealth = GetComponent<EnemyHealth>();
         }
 
         public void MakeDamage()
         {
-            _gameManager.DamagePlayerHealth(damage);
+            OnEnemyHit?.Invoke(damage);
+            _enemyHealth.EnemyDead();
         }
     }
 }

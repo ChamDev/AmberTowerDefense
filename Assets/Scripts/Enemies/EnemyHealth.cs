@@ -2,6 +2,7 @@
 using Managers;
 using Projectiles;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies
 {
@@ -9,32 +10,35 @@ namespace Enemies
     {
         [SerializeField] private float health = 100f;
         [SerializeField] private string projectileTag = "Projectile";
+        [SerializeField] private int scoreWhenDie = 5;
 
-        private GameManager _gameManager;
+        [Inject] private IGameManager _gameManager;
+        public static Action<int> OnEnemyDead;
         
-        private void Awake()
-        {
-            _gameManager = FindObjectOfType<GameManager>();
-        }
-
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag(projectileTag))
             {
-                Hit(other.GetComponent<Projectile>().Damage);
+                EnemyHitted(other.GetComponent<Projectile>().Damage);
                 other.gameObject.SetActive(false);
             }
         }
 
-        void Hit(float damage)
+        void EnemyHitted(float damage)
         {
             health -= damage;
 				
-            if (health <= 0) //estoy vivo aún
+            if (health <= 0)
             {
-                _gameManager.EnemyDefeated();
-                gameObject.SetActive(false);
+                EnemyDead();
             } 
+        }
+
+        public void EnemyDead()
+        {
+            _gameManager.EnemyDefeated();
+            OnEnemyDead?.Invoke(scoreWhenDie);
+            gameObject.SetActive(false);
         }
     }
 }

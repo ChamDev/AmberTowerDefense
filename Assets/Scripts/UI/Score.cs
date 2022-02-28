@@ -1,4 +1,5 @@
 ﻿using System;
+using Enemies;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,11 +16,18 @@ namespace UI
          {
             _scoreText = GetComponent<Text>();
          }
+
+         EnemyHealth.OnEnemyDead += AddScore;
       }
 
       private void Start()
       {
          UpdateScore();
+      }
+
+      private void OnDestroy()
+      {
+         EnemyHealth.OnEnemyDead -= AddScore;
       }
 
       public void AddScore(int score)
